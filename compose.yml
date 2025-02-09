@@ -31,7 +31,7 @@ services:
     container_name: caddy
     restart: unless-stopped
     environment:
-      - WEB_DOMAIN=13.235.113.70
+      - WEB_DOMAIN=localhost
     ports:
       - "80:80"       # HTTP (will be redirected to HTTPS)
       - "443:443"     # HTTPS
