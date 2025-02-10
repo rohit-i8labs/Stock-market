@@ -1,3 +1,0 @@
-{$WEB_DOMAIN} {
-    reverse_proxy flask_gunicorn_web:5000
-}
