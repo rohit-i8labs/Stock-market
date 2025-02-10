@@ -19,9 +19,6 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: no
-    environment: 
-      - GUNICORN_CMD_ARGS="--workers 1 --bind 0.0.0.0:5000"
-    user: mst
     networks:
       - caddy
 
@@ -40,4 +37,4 @@ services:
       - /data  # Keeps data inside the container instead of creating folders locally
       - /config  # Keeps config inside the container instead of creating folders locally
     networks:
-      - caddy   
+      - caddy
