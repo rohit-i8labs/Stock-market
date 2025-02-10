@@ -21,15 +21,6 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Add a dedicated user and group 'mst'
-RUN addgroup -S mst && adduser -S mst -G mst
-
-# Set ownership of the /app directory to the 'mst' user
-RUN chown -R mst:mst /app
-
-# Switch to the 'mst' user
-USER mst
-
 # Copy the entire application code into the container
 COPY . .
 
@@ -37,4 +28,4 @@ COPY . .
 EXPOSE 5000
 
 # Run the Flask application with Gunicorn
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:5000", "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
