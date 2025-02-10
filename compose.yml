@@ -1,9 +1,9 @@
 # Networks for communication between services
 networks:
-  caddy:
+  web:
     driver: bridge
 
-# Volumes for data, config, and logs (excluding caddy_config and caddy_data)
+# Volumes for data, config, and logs
 volumes:
   config:
   data:
@@ -13,28 +13,23 @@ services:
   # Flask server
   flask_gunicorn_web:
     container_name: flask_gunicorn_web
-    depends_on:
-      - caddy
     build:
       context: .
       dockerfile: Dockerfile
     restart: no
     networks:
-      - caddy
+      - web
 
-  # Caddy server for reverse proxying and HTTPS
-  caddy:
-    image: caddy:latest
-    container_name: caddy
-    restart: no
-    environment:
-      - WEB_DOMAIN=localhost
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    depends_on:
+      - flask_gunicorn_web
     ports:
-      - "80:80"       # HTTP (will be redirected to HTTPS)
-      - "443:443"     # HTTPS
+      - "80:80"    # HTTP traffic
+      - "443:443"  # HTTPS traffic (if needed later)
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - /data  # Keeps data inside the container instead of creating folders locally
-      - /config  # Keeps config inside the container instead of creating folders locally
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     networks:
-      - caddy
+      - web
