@@ -18,9 +18,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: unless-stopped
+    restart: no
     environment: 
-      - GUNICORN_CMD_ARGS="--workers 4 --bind 0.0.0.0:5000"
+      - GUNICORN_CMD_ARGS="--workers 1 --bind 0.0.0.0:5000"
     user: mst
     networks:
       - caddy
@@ -29,7 +29,7 @@ services:
   caddy:
     image: caddy:latest
     container_name: caddy
-    restart: unless-stopped
+    restart: no
     environment:
       - WEB_DOMAIN=localhost
     ports:
