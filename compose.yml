@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: no
+    restart: unless-stopped
     networks:
       - web
 
@@ -24,6 +24,7 @@ services:
   nginx:
     image: nginx:latest
     container_name: nginx
+    restart: unless-stopped
     depends_on:
       - flask_gunicorn_web
     ports:
