@@ -82,14 +82,23 @@ def fetch_zack_data2(stock):
 
 # Usage
 def scrape_stock(stock_name):
-    if stock_name:
-        result  = fetch_msn_data(stock_name)
+    try:
+        if stock_name:
+            result  = fetch_msn_data(stock_name)
 
-        result2 = fetch_zack_data(stock_name)
-        if result2:  result.update(result2)
+            result2 = fetch_zack_data(stock_name)
+            if result2:  result.update(result2)
 
-        result3 = fetch_zack_data2(stock_name)
-        if result3: result.update(result3)
-        
-        return result
-    return None 
+            result3 = fetch_zack_data2(stock_name)
+            if result3: result.update(result3)
+            
+            requestsHtmlScraper.close_session()
+            seleniumScraper.quit_driver()
+            return result
+        return {} 
+    
+    except Exception as e:
+        print(f"scrape_stock method exception : {e}")
+        requestsHtmlScraper.close_session()
+        seleniumScraper.quit_driver()
+        return {}
