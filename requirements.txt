@@ -9,7 +9,7 @@ charset-normalizer==3.4.1
 click==8.1.8
 cssselect==1.2.0
 fake-useragent==2.0.3
-Flask==3.1.0
+Flask==3.1.1
 Flask-RESTful==0.3.10
 frozendict==2.4.6
 gunicorn==23.0.0
